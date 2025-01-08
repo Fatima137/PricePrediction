@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Banglore Home Price Prediction</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+	<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<h1>Home Price Predictor</h1>
+<div class="img"></div>
+<form class="form">
+	<h2>Area (Square Feet)</h2>
+    <div class="input-group">
+      <label for="sqft">Area (sqft):</label>
+      <input type="number" id="sqft" placeholder="Enter area in sqft">
+    </div>
+	<h2>BHK</h2>
+	<div class="input-group">
+      <label for="bedrooms">Bedrooms:</label>
+      <input type="number" id="bedrooms" placeholder="Enter number of bedrooms">
+    </div>
+	</form>
+<form class="form">
+	<h2>Bath</h2>
+	<div class="input-group">
+      <label for="washrooms">Washrooms:</label>
+      <input type="number" id="washrooms" placeholder="Enter number of washrooms">
+    </div>
+		<h2>Location</h2>
+	<div>
+  <div class="input-group">
+      <label for="location">Location:</label>
+      <select id="location">
+        <option value="Chikkalasandra">Chikkalasandra</option>
+        <option value="Uttarahalli">Uttarahalli</option>
+        <option value="Murugeshpalya">Murugeshpalya</option>
+        <option value="Sarjapur Road">Sarjapur Road</option>
+        <option value="Ganga Nagar">Ganga Nagar</option>
+        <option value="Yelahanka">Yelahanka</option>
+        <option value="Kanakpura Road">Kanakpura Road</option>
+        <option value="HSR Layout">HSR Layout</option>
+        <option value="Doddathoguru">Doddathoguru</option>
+        <option value="Whitefield">Whitefield</option>
+        <option value="KR Puram">KR Puram</option>
+        <option value="Himagiri Meadows">Himagiri Meadows</option>
+        <option value="Adarsh Nagar">Adarsh Nagar</option>
+      </select>
+</div>
+	<button class="submit" onclick="predictPrice()" type="button">Estimate Price</button>
+	<div id="uiEstimatedPrice" class="result">
+		<div id="result"></div>
+			<h2></h2> </div>
+	 <script src="script.js"></script>
+</body>
+</html>

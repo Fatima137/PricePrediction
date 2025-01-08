@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluation Metrics Calculation</title>
+</head>
+<body>
+  <h1>Evaluation Metrics Calculation</h1>
+  <div id="metricsOutput">
+    <!-- Evaluation metrics will be displayed here -->
+  </div>
+
+  <script>
+    // JavaScript code for calculating metrics
+    // Dummy data for demonstration
+    let estimatedPrices = [500000, 550000, 480000, 600000, 520000, 70000, 32000];
+    let actualPrices = [480000, 540000, 490000, 610000, 500000, 71000, 44000];
+    const actualLabels = [1, 0, 1, 1, 0]; // Example: 1 for positive, 0 for negative
+    const predictedLabels = [1, 0, 1, 0, 1]; // Example: 1 for predicted positive, 0 for predicted negative
+    const dataPoints = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]]; // Example data points for clustering
+    const clusterLabels = [0, 1, 0, 1, 0]; // Example cluster labels
+
+    // Function to calculate metrics
+    function calculateMetrics() {
+      const mae = calculateMAE(actualPrices, estimatedPrices);
+      const rmse = calculateRMSE(actualPrices, estimatedPrices);
+      const r2 = calculateR2(actualPrices, estimatedPrices);
+      const accuracy = calculateAccuracy(actualLabels, predictedLabels);
+      const precision = calculatePrecision(actualLabels, predictedLabels);
+      const recall = calculateRecall(actualLabels, predictedLabels);
+      const f1 = calculateF1Score(actualLabels, predictedLabels);
+      const confusionMatrix = calculateConfusionMatrix(actualLabels, predictedLabels);
+      const silhouetteScore = calculateSilhouetteScore(dataPoints, clusterLabels);
+
+      const metricsOutput = document.getElementById('metricsOutput');
+      metricsOutput.innerHTML = `
+        <h2>Regression Metrics:</h2>
+        <p>MAE: ${mae.toFixed(2)}</p>
+        <p>RMSE: ${rmse.toFixed(2)}</p>
+        <p>R2 Score: ${r2.toFixed(2)}</p>
+
+        <h2>Classification Metrics:</h2>
+        <p>Accuracy: ${accuracy.toFixed(2)}</p>
+        <p>Precision: ${precision.toFixed(2)}</p>
+        <p>Recall: ${recall.toFixed(2)}</p>
+        <p>F1 Score: ${f1.toFixed(2)}</p>
+        <p>Confusion Matrix: ${confusionMatrix}</p>
+
+        <h2>Clustering Metric:</h2>
+        <p>Silhouette Score: ${silhouetteScore.toFixed(2)}</p>
+      `;
+    }
+
+    // Dummy functions for metric calculations
+    function calculateMAE(actual, estimated) {
+      return Math.abs(actual.reduce((acc, val, idx) => acc + (val - estimated[idx]), 0) / actual.length);
+    }
+
+    function calculateRMSE(actual, estimated) {
+      const squaredErrors = actual.map((val, idx) => Math.pow(val - estimated[idx], 2));
+      const meanSquaredError = squaredErrors.reduce((acc, val) => acc + val, 0) / actual.length;
+      return Math.sqrt(meanSquaredError);
+    }
+
+    function calculateR2(actual, estimated) {
+      const meanActual = actual.reduce((acc, val) => acc + val, 0) / actual.length;
+      const ssTotal = actual.reduce((acc, val) => acc + Math.pow(val - meanActual, 2), 0);
+      const ssResidual = actual.reduce((acc, val, idx) => acc + Math.pow(val - estimated[idx], 2), 0);
+      return 1 - (ssResidual / ssTotal);
+    }
+
+    function calculateAccuracy(actual, predicted) {
+      const correct = actual.reduce((acc, val, idx) => acc + (val === predicted[idx] ? 1 : 0), 0);
+      return correct / actual.length;
+    }
+
+    function calculatePrecision(actual, predicted) {
+      const truePositives = actual.reduce((acc, val, idx) => acc + (val === 1 && predicted[idx] === 1 ? 1 : 0), 0);
+      const falsePositives = actual.reduce((acc, val, idx) => acc + (val === 0 && predicted[idx] === 1 ? 1 : 0), 0);
+      return truePositives / (truePositives + falsePositives);
+    }
+
+    function calculateRecall(actual, predicted) {
+      const truePositives = actual.reduce((acc, val, idx) => acc + (val === 1 && predicted[idx] === 1 ? 1 : 0), 0);
+      const falseNegatives = actual.reduce((acc, val, idx) => acc + (val === 1 && predicted[idx] === 0 ? 1 : 0), 0);
+      return truePositives / (truePositives + falseNegatives);
+    }
+
+    function calculateF1Score(actual, predicted) {
+      const precision = calculatePrecision(actual, predicted);
+      const recall = calculateRecall(actual, predicted);
+      return 2 * (precision * recall) / (precision + recall);
+    }
+
+    function calculateConfusionMatrix(actual, predicted) {
+      const truePositives = actual.reduce((acc, val, idx) => acc + (val === 1 && predicted[idx] === 1 ? 1 : 0), 0);
+      const falsePositives = actual.reduce((acc, val, idx) => acc + (val === 0 && predicted[idx] === 1 ? 1 : 0), 0);
+      const trueNegatives = actual.reduce((acc, val, idx) => acc + (val === 0 && predicted[idx] === 0 ? 1 : 0), 0);
+      const falseNegatives = actual.reduce((acc, val, idx) => acc + (val === 1 && predicted[idx] === 0 ? 1 : 0), 0);
+
+      return `
+        <br>|------Labels-----|Predicted Positive|Predicted Negative|<br>
+            |-------------------|----------------------|-----------------------|<br>
+            |Actual Positive|---------${truePositives}------------|---------- ${falseNegatives} --------- |<br>
+            |Actual Negative|--------- ${falsePositives}----------|---------- ${trueNegatives}-----------|<br>
+      `;
+    }
+
+
+    function calculateSilhouetteScore(dataPoints, clusterLabels) {
+      // Dummy calculation for silhouette score
+      return 0.75; // Placeholder value
+    }
+
+    // Call calculateMetrics when the page loads or at an appropriate time
+    calculateMetrics();
+  </script>
+</body>
+</html>
